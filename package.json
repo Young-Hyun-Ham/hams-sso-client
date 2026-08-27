@@ -1,0 +1,57 @@
+{
+  "name": "@hams-fam/sso-client",
+  "version": "0.1.7",
+  "description": "HAMS OAuth SSO client for Next.js applications",
+  "type": "module",
+  "sideEffects": false,
+  "files": [
+    "dist",
+    "public",
+    "README.md"
+  ],
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./proxy": {
+      "types": "./dist/proxy.d.ts",
+      "import": "./dist/proxy.js"
+    },
+    "./core": {
+      "types": "./dist/core.d.ts",
+      "import": "./dist/core.js"
+    },
+    "./web": {
+      "types": "./dist/web.d.ts",
+      "import": "./dist/web.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc --project tsconfig.json --pretty",
+    "prepack": "pnpm run build"
+  },
+  "peerDependencies": {
+    "next": ">=16.0.0"
+  },
+  "peerDependenciesMeta": {
+    "next": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "next": "^16.3.1",
+    "typescript": "^5"
+  },
+  "engines": {
+    "node": ">=20.9.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "license": "UNLICENSED"
+}

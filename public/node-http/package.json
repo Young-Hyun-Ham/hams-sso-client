@@ -1,0 +1,14 @@
+{
+  "name": "hams-sso-node-http-example",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node --env-file=.env server.js"
+  },
+  "dependencies": {
+    "@hams-fam/sso-client": "^0.1.4"
+  },
+  "engines": {
+    "node": ">=20.9.0"
+  }
+}
