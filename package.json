@@ -1,6 +1,6 @@
 {
   "name": "@hams-fam/sso-client",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "HAMS OAuth SSO client for Next.js applications",
   "type": "module",
   "sideEffects": false,

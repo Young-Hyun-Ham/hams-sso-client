@@ -21,6 +21,7 @@ export type SsoSessionUser = {
   termsVersion: string | null;
   birthDate: string | null;
   gender: SsoGender | null;
+  hampoBalance: number;
   serviceMemberships: SsoServiceMembership[];
 
   aiEnabled: boolean;
@@ -41,6 +42,7 @@ export type SsoExchangeUser = {
   termsVersion?: string | null;
   birthDate?: string | null;
   gender?: SsoGender | null;
+  hampoBalance?: number;
   serviceMemberships?: SsoServiceMembership[];
 
   aiEnabled?: boolean;

@@ -40,6 +40,12 @@ function toSessionUser(user: SsoExchangeUser): SsoSessionUser {
     termsVersion: user.termsVersion ?? null,
     birthDate: user.birthDate ?? null,
     gender: user.gender ?? null,
+    hampoBalance:
+      typeof user.hampoBalance === "number" &&
+      Number.isSafeInteger(user.hampoBalance) &&
+      user.hampoBalance >= 0
+        ? user.hampoBalance
+        : 0,
     serviceMemberships: currentServiceMembership
       ? [currentServiceMembership]
       : [],

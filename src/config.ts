@@ -109,6 +109,11 @@ export function getDevMockUser(): SsoSessionUser {
     termsVersion: null,
     birthDate: null,
     gender: null,
+    hampoBalance: Number.isSafeInteger(
+      Number(process.env.HAMS_SSO_DEV_MOCK_HAMPO_BALANCE),
+    )
+      ? Math.max(0, Number(process.env.HAMS_SSO_DEV_MOCK_HAMPO_BALANCE))
+      : 0,
     serviceMemberships: [],
 
     aiEnabled: false,

@@ -13,6 +13,7 @@ Next.js 전용 handler와 프레임워크 독립적인 표준 Web API handler를
 - Next.js `proxy.ts`용 인증 함수
 - 표준 Web `Request`/`Response` 기반 비-Next.js handler
 - API Route용 사용자 조회 및 인증 응답
+- 서비스 세션 사용자에 보유 함포(`hampoBalance`) 포함
 - 로컬 개발용 mock 로그인
 
 Next.js가 파일 위치를 요구하는 `app/**/route.ts`와 루트 `proxy.ts`에는 이 패키지의 함수를 다시 export하는 얇은 adapter만 둡니다.
@@ -71,6 +72,22 @@ const accessToken = getSsoAccessTokenFromRequest(request);
 access token의 유효기간이 끝나면 `null`이 반환되므로 사용자를 SSO 로그인으로 다시
 보내야 합니다.
 
+## 보유 함포 조회
+
+SSO 로그인 콜백에서 발급하는 서비스 세션 쿠키에는 SSO 서버가 전달한 보유 함포가
+`hampoBalance`라는 0 이상의 정수로 저장됩니다. 쿠키는 HttpOnly이므로 브라우저
+JavaScript에서 직접 읽지 않고, 서버에서 `getSsoUserFromRequest()`로 조회합니다.
+
+```ts
+import { getSsoUserFromRequest } from "@hams-fam/sso-client";
+
+const user = getSsoUserFromRequest(request);
+const hampoBalance = user?.hampoBalance ?? 0;
+```
+
+잔액은 로그인 시점의 값입니다. SSO 서버에서 충전·사용한 뒤 서비스 화면에 즉시
+반영해야 한다면 SSO 로그인을 다시 수행해 서비스 세션 쿠키를 갱신해야 합니다.
+
 ## 개발용 SSO 우회
 
 서비스 프로젝트의 `.env`에 다음 값을 설정하면 개발 서버에서 SSO 인증 서버를 거치지 않습니다.
@@ -83,6 +100,7 @@ HAMS_SSO_DEV_MOCK_USER_ID=dev-user
 HAMS_SSO_DEV_MOCK_USER_EMAIL=dev@localhost
 HAMS_SSO_DEV_MOCK_USER_LOGIN_ID=dev
 HAMS_SSO_DEV_MOCK_USER_NAME=개발자
+HAMS_SSO_DEV_MOCK_HAMPO_BALANCE=100
 ```
 
 이 설정이 활성화되면 Proxy는 요청을 통과시키고, `getSsoUserFromRequest()`는 mock 사용자를 반환하며, 로그인과 로그아웃 Route는 SSO 서버 대신 서비스 내부 경로로 이동합니다.
